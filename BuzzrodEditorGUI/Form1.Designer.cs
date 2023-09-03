@@ -68,6 +68,7 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.consTypeButton = new System.Windows.Forms.Button();
             this.deleteItemButton = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.savesButton = new System.Windows.Forms.Button();
@@ -144,7 +145,7 @@
             this.itemsButton.Name = "itemsButton";
             this.itemsButton.Size = new System.Drawing.Size(75, 23);
             this.itemsButton.TabIndex = 1;
-            this.itemsButton.Text = "Items";
+            this.itemsButton.Text = "&Items";
             this.itemsButton.UseVisualStyleBackColor = true;
             this.itemsButton.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -155,7 +156,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 1;
-            this.button3.Text = "Position";
+            this.button3.Text = "&Position";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -354,6 +355,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.itemPanel.Controls.Add(this.checkBox1);
             this.itemPanel.Controls.Add(this.listView2);
+            this.itemPanel.Controls.Add(this.consTypeButton);
             this.itemPanel.Controls.Add(this.deleteItemButton);
             this.itemPanel.Controls.Add(this.button7);
             this.itemPanel.Location = new System.Drawing.Point(0, 56);
@@ -370,7 +372,7 @@
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(141, 17);
             this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Show items with 0 count";
+            this.checkBox1.Text = "Show items with 0 coun&t";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
@@ -427,6 +429,18 @@
             // 
             this.columnHeader3.Text = "Offset";
             // 
+            // consTypeButton
+            // 
+            this.consTypeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.consTypeButton.Enabled = false;
+            this.consTypeButton.Location = new System.Drawing.Point(343, 282);
+            this.consTypeButton.Name = "consTypeButton";
+            this.consTypeButton.Size = new System.Drawing.Size(80, 23);
+            this.consTypeButton.TabIndex = 1;
+            this.consTypeButton.Text = "Co&nvert";
+            this.consTypeButton.UseVisualStyleBackColor = true;
+            this.consTypeButton.Click += new System.EventHandler(this.consTypeButton_Click);
+            // 
             // deleteItemButton
             // 
             this.deleteItemButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -458,7 +472,7 @@
             this.savesButton.Name = "savesButton";
             this.savesButton.Size = new System.Drawing.Size(75, 23);
             this.savesButton.TabIndex = 1;
-            this.savesButton.Text = "Saves";
+            this.savesButton.Text = "&Saves";
             this.savesButton.UseVisualStyleBackColor = true;
             this.savesButton.Click += new System.EventHandler(this.savesButton_Click);
             // 
@@ -527,9 +541,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 384);
+            this.Controls.Add(this.itemPanel);
             this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.positionPanel);
-            this.Controls.Add(this.itemPanel);
             this.Controls.Add(this.savesButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.itemsButton);
@@ -601,6 +615,7 @@
         private System.Windows.Forms.Label zCoordLabel;
         private System.Windows.Forms.Label yCoordLabel;
         private System.Windows.Forms.Label xCoordLabel;
+        private System.Windows.Forms.Button consTypeButton;
     }
 }
 

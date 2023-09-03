@@ -233,6 +233,7 @@ namespace BuzzrodEditorGUI
         {
             button7.Enabled = (listView2.SelectedIndices.Count > 0);
             deleteItemButton.Enabled = (listView2.SelectedIndices.Count > 0);
+            consTypeButton.Enabled = (listView2.SelectedIndices.Count > 0);
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -466,6 +467,21 @@ namespace BuzzrodEditorGUI
             profiles[selected].SetPosition(actualX, actualY);
             ReloadPosition();
         }
+
+        private void consTypeButton_Click(object sender, EventArgs e)
+        {
+            byte newValue = Convert.ToByte(listView2.SelectedItems[0].SubItems[4].Text);
+            if (newValue > 64)
+            {
+                newValue -= 64;
+            } else
+            {
+                newValue += 64;
+            }
+            profiles[selected].Patch(Convert.ToInt32(listView2.SelectedItems[0].SubItems[5].Text), newValue);
+            profiles[selected].InitializeItems();
+            ReloadProfileItems();
+        }
     }
     public class BuzzrodProfile
     {
@@ -529,7 +545,7 @@ namespace BuzzrodEditorGUI
                 }
                 if ((count > 0) || (this.showAll))
                 {
-                    this.items.Add(i.ToString() + "," + this.item_table[i] + "," + (consumptive ? count.ToString():"-") + "," + (consumptive?"Slot (consumptive)":"Slot") +  "," + rawCount.ToString() + "," + seek.ToString());
+                    this.items.Add(i.ToString() + "," + this.slot_table[i] + "," + (consumptive ? count.ToString():"-") + "," + (consumptive?"Slot (consumptive)":"Slot") +  "," + rawCount.ToString() + "," + seek.ToString());
                 }
                 seek += 4;
             }
