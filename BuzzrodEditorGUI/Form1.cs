@@ -101,7 +101,6 @@ namespace BuzzrodEditorGUI
 
         private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            openButton.Enabled = listView1.SelectedItems.Count > 0;
             replaceButton.Enabled = listView1.SelectedItems.Count > 0;
             extractButton.Enabled = listView1.SelectedItems.Count > 0;
             deleteButton.Enabled = listView1.SelectedItems.Count > 0;
@@ -541,11 +540,9 @@ namespace BuzzrodEditorGUI
                 Array.Copy(this.data, seek, byte_s, 0, 4);
                 int count = BitConverter.ToInt32(byte_s, 0) / 2;
                 int rawCount = BitConverter.ToInt32(byte_s, 0);
-                bool consumptive = false;
                 if (count >= 32)
                 {
                     count -= 32;
-                    consumptive = true;
                 }
                 if ((count > 0) || (this.showAll))
                 {
@@ -571,12 +568,12 @@ namespace BuzzrodEditorGUI
         {
             byte[] xbytes = BitConverter.GetBytes(x);
             byte[] zbytes = BitConverter.GetBytes(z);
-            this.Patch(0x5a, xbytes[0]);
+            this.Patch(0x5c, xbytes[0]);
             this.Patch(0x5b, xbytes[1]);
-            this.Patch(0x5c, xbytes[2]);
-            this.Patch(0x61, zbytes[0]);
+            this.Patch(0x5a, xbytes[2]);
+            this.Patch(0x63, zbytes[0]);
             this.Patch(0x62, zbytes[1]);
-            this.Patch(0x63, zbytes[2]);
+            this.Patch(0x61, zbytes[2]);
         }
 
         public byte GetByte(int offset)

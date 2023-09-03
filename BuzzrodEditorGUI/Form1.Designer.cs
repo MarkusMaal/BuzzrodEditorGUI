@@ -39,7 +39,6 @@
             this.hexoffset = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.itemsButton = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.openButton = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -159,17 +158,6 @@
             this.button3.Text = "Position";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // openButton
-            // 
-            this.openButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.openButton.Enabled = false;
-            this.openButton.Location = new System.Drawing.Point(538, 282);
-            this.openButton.Name = "openButton";
-            this.openButton.Size = new System.Drawing.Size(75, 23);
-            this.openButton.TabIndex = 1;
-            this.openButton.Text = "&Open";
-            this.openButton.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -291,7 +279,6 @@
             this.savesPanel.Controls.Add(this.replaceButton);
             this.savesPanel.Controls.Add(this.extractButton);
             this.savesPanel.Controls.Add(this.listView1);
-            this.savesPanel.Controls.Add(this.openButton);
             this.savesPanel.Location = new System.Drawing.Point(0, 56);
             this.savesPanel.Name = "savesPanel";
             this.savesPanel.Size = new System.Drawing.Size(625, 328);
@@ -311,7 +298,7 @@
             // 
             this.areaButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.areaButton.Enabled = false;
-            this.areaButton.Location = new System.Drawing.Point(214, 282);
+            this.areaButton.Location = new System.Drawing.Point(295, 282);
             this.areaButton.Name = "areaButton";
             this.areaButton.Size = new System.Drawing.Size(75, 23);
             this.areaButton.TabIndex = 3;
@@ -323,7 +310,7 @@
             // 
             this.deleteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.deleteButton.Enabled = false;
-            this.deleteButton.Location = new System.Drawing.Point(295, 282);
+            this.deleteButton.Location = new System.Drawing.Point(376, 282);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(75, 23);
             this.deleteButton.TabIndex = 3;
@@ -335,7 +322,7 @@
             // 
             this.replaceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.replaceButton.Enabled = false;
-            this.replaceButton.Location = new System.Drawing.Point(376, 282);
+            this.replaceButton.Location = new System.Drawing.Point(457, 282);
             this.replaceButton.Name = "replaceButton";
             this.replaceButton.Size = new System.Drawing.Size(75, 23);
             this.replaceButton.TabIndex = 3;
@@ -347,7 +334,7 @@
             // 
             this.extractButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.extractButton.Enabled = false;
-            this.extractButton.Location = new System.Drawing.Point(457, 282);
+            this.extractButton.Location = new System.Drawing.Point(538, 282);
             this.extractButton.Name = "extractButton";
             this.extractButton.Size = new System.Drawing.Size(75, 23);
             this.extractButton.TabIndex = 2;
@@ -540,8 +527,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 384);
-            this.Controls.Add(this.positionPanel);
             this.Controls.Add(this.savesPanel);
+            this.Controls.Add(this.positionPanel);
             this.Controls.Add(this.itemPanel);
             this.Controls.Add(this.savesButton);
             this.Controls.Add(this.button3);
@@ -574,7 +561,6 @@
         private System.Windows.Forms.ColumnHeader areaname;
         private System.Windows.Forms.Button itemsButton;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
