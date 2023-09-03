@@ -32,6 +32,7 @@ namespace BuzzrodEditorGUI
 
         private void AreaSelect_Load(object sender, EventArgs e)
         {
+            if (area_selection >= areaSelector.Items.Count) { return;  }
             areaSelector.SelectedIndex = area_selection;
         }
     }
