@@ -68,11 +68,15 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.wikiButton = new System.Windows.Forms.Button();
             this.consTypeButton = new System.Windows.Forms.Button();
             this.deleteItemButton = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.savesButton = new System.Windows.Forms.Button();
             this.positionPanel = new System.Windows.Forms.Panel();
+            this.yTracker = new System.Windows.Forms.TrackBar();
+            this.zTracker = new System.Windows.Forms.TrackBar();
+            this.xTracker = new System.Windows.Forms.TrackBar();
             this.zCoordLabel = new System.Windows.Forms.Label();
             this.yCoordLabel = new System.Windows.Forms.Label();
             this.xCoordLabel = new System.Windows.Forms.Label();
@@ -81,6 +85,9 @@
             this.savesPanel.SuspendLayout();
             this.itemPanel.SuspendLayout();
             this.positionPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.yTracker)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zTracker)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xTracker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,6 +104,7 @@
             this.lurename,
             this.hexoffset});
             this.listView1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.listView1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
@@ -156,7 +164,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 1;
-            this.button3.Text = "&Position";
+            this.button3.Text = "&Map";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -355,6 +363,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.itemPanel.Controls.Add(this.checkBox1);
             this.itemPanel.Controls.Add(this.listView2);
+            this.itemPanel.Controls.Add(this.wikiButton);
             this.itemPanel.Controls.Add(this.consTypeButton);
             this.itemPanel.Controls.Add(this.deleteItemButton);
             this.itemPanel.Controls.Add(this.button7);
@@ -389,6 +398,7 @@
             this.columnHeader6,
             this.columnHeader3});
             this.listView2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.listView2.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.listView2.FullRowSelect = true;
             this.listView2.GridLines = true;
             this.listView2.HideSelection = false;
@@ -413,21 +423,33 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "Amount";
-            this.columnHeader4.Width = 128;
+            this.columnHeader4.Width = 101;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "Type";
-            this.columnHeader5.Width = 80;
+            this.columnHeader5.Width = 96;
             // 
             // columnHeader6
             // 
-            this.columnHeader6.Text = "Raw hex value";
-            this.columnHeader6.Width = 90;
+            this.columnHeader6.Text = "Raw value";
+            this.columnHeader6.Width = 105;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Offset";
+            // 
+            // wikiButton
+            // 
+            this.wikiButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.wikiButton.Enabled = false;
+            this.wikiButton.Location = new System.Drawing.Point(257, 282);
+            this.wikiButton.Name = "wikiButton";
+            this.wikiButton.Size = new System.Drawing.Size(80, 23);
+            this.wikiButton.TabIndex = 1;
+            this.wikiButton.Text = "&Wiki page";
+            this.wikiButton.UseVisualStyleBackColor = true;
+            this.wikiButton.Click += new System.EventHandler(this.wikiButton_Click);
             // 
             // consTypeButton
             // 
@@ -481,6 +503,9 @@
             this.positionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.positionPanel.Controls.Add(this.yTracker);
+            this.positionPanel.Controls.Add(this.zTracker);
+            this.positionPanel.Controls.Add(this.xTracker);
             this.positionPanel.Controls.Add(this.zCoordLabel);
             this.positionPanel.Controls.Add(this.yCoordLabel);
             this.positionPanel.Controls.Add(this.xCoordLabel);
@@ -491,11 +516,44 @@
             this.positionPanel.TabIndex = 5;
             this.positionPanel.Visible = false;
             // 
+            // yTracker
+            // 
+            this.yTracker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.yTracker.Location = new System.Drawing.Point(433, 150);
+            this.yTracker.Maximum = 65535;
+            this.yTracker.Name = "yTracker";
+            this.yTracker.Size = new System.Drawing.Size(184, 42);
+            this.yTracker.TabIndex = 2;
+            this.yTracker.TickFrequency = 2000;
+            this.yTracker.Scroll += new System.EventHandler(this.yTracker_Scroll);
+            // 
+            // zTracker
+            // 
+            this.zTracker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.zTracker.Location = new System.Drawing.Point(432, 89);
+            this.zTracker.Maximum = 65535;
+            this.zTracker.Name = "zTracker";
+            this.zTracker.Size = new System.Drawing.Size(184, 42);
+            this.zTracker.TabIndex = 2;
+            this.zTracker.TickFrequency = 2000;
+            this.zTracker.Scroll += new System.EventHandler(this.zTracker_Scroll);
+            // 
+            // xTracker
+            // 
+            this.xTracker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.xTracker.Location = new System.Drawing.Point(429, 28);
+            this.xTracker.Maximum = 65535;
+            this.xTracker.Name = "xTracker";
+            this.xTracker.Size = new System.Drawing.Size(184, 42);
+            this.xTracker.TabIndex = 2;
+            this.xTracker.TickFrequency = 2000;
+            this.xTracker.Scroll += new System.EventHandler(this.xTracker_Scroll);
+            // 
             // zCoordLabel
             // 
             this.zCoordLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.zCoordLabel.AutoSize = true;
-            this.zCoordLabel.Location = new System.Drawing.Point(429, 25);
+            this.zCoordLabel.Location = new System.Drawing.Point(430, 73);
             this.zCoordLabel.Name = "zCoordLabel";
             this.zCoordLabel.Size = new System.Drawing.Size(76, 13);
             this.zCoordLabel.TabIndex = 1;
@@ -505,7 +563,7 @@
             // 
             this.yCoordLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.yCoordLabel.AutoSize = true;
-            this.yCoordLabel.Location = new System.Drawing.Point(429, 38);
+            this.yCoordLabel.Location = new System.Drawing.Point(429, 134);
             this.yCoordLabel.Name = "yCoordLabel";
             this.yCoordLabel.Size = new System.Drawing.Size(79, 13);
             this.yCoordLabel.TabIndex = 1;
@@ -542,14 +600,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 384);
             this.Controls.Add(this.itemPanel);
-            this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.positionPanel);
+            this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.savesButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.itemsButton);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(626, 205);
             this.Name = "Form1";
             this.Text = "Buzzrod Save Editor (Alpha)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -561,6 +620,9 @@
             this.itemPanel.PerformLayout();
             this.positionPanel.ResumeLayout(false);
             this.positionPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.yTracker)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zTracker)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xTracker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -616,6 +678,10 @@
         private System.Windows.Forms.Label yCoordLabel;
         private System.Windows.Forms.Label xCoordLabel;
         private System.Windows.Forms.Button consTypeButton;
+        private System.Windows.Forms.Button wikiButton;
+        private System.Windows.Forms.TrackBar xTracker;
+        private System.Windows.Forms.TrackBar zTracker;
+        private System.Windows.Forms.TrackBar yTracker;
     }
 }
 

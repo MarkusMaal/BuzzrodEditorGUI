@@ -18,6 +18,7 @@ namespace BuzzrodEditorGUI
 {
     public partial class Form1 : Form
     {
+        bool lock_ = false;
         byte[] saveFileData;
         BuzzrodProfile[] profiles;
         int selected = -1;
@@ -234,10 +235,12 @@ namespace BuzzrodEditorGUI
             button7.Enabled = (listView2.SelectedIndices.Count > 0);
             deleteItemButton.Enabled = (listView2.SelectedIndices.Count > 0);
             consTypeButton.Enabled = (listView2.SelectedIndices.Count > 0);
+            wikiButton.Enabled = listView2.SelectedIndices.Count > 0;
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            bool cons = Convert.ToInt32(listView2.SelectedItems[0].SubItems[4].Text) >= 64;
             ValueEdit ve = new ValueEdit();
             ve.current = listView2.SelectedItems[0].SubItems[2].Text;
             if (ve.ShowDialog() == DialogResult.OK)
@@ -261,6 +264,10 @@ namespace BuzzrodEditorGUI
                 }
                 int memory = listView2.SelectedIndices[0];
                 int raw_value = Convert.ToInt32(ve.valueBox.Text) * 2;
+                if (cons)
+                {
+                    raw_value += 64;
+                }
                 byte[] write_bytes = BitConverter.GetBytes(raw_value);
                 int offset = Convert.ToInt32(listView2.SelectedItems[0].SubItems[5].Text);
                 for (int i = 0; i < 4; i++)
@@ -312,10 +319,10 @@ namespace BuzzrodEditorGUI
                 brp.InitializeItems();
             }
             ReloadProfileItems();
-            if (memory > listView2.Items.Count)
+            if (memory < listView2.Items.Count)
             {
                 listView2.SelectedIndices.Add(memory);
-            } else
+            } else if (listView2.Items.Count > 0)
             {
                 listView2.SelectedIndices.Add(0);
             }
@@ -447,23 +454,36 @@ namespace BuzzrodEditorGUI
             xCoordLabel.Text = "X: " + brp.positionX.ToString();
             yCoordLabel.Text = "Y: " + brp.positionY.ToString();
             zCoordLabel.Text = "Z: " + brp.positionZ.ToString();
-            double percX = ((brp.positionX / Math.Pow(2, 24)) * 200);
-            double percZ = ((brp.positionZ / Math.Pow(2, 24)) * 100);
+            lock_ = true;
+            xTracker.Value = brp.positionX;
+            yTracker.Value = brp.positionY;
+            zTracker.Value = brp.positionZ;
+            lock_ = false;
+            double percX = (((double)brp.positionX / (double)65535) * 200);
+            double percZ = (((double)brp.positionZ / (double)65535) * 100);
             Bitmap bmp = new Bitmap(200, 100);
-            bmp.SetPixel(Convert.ToInt32(percX), Convert.ToInt32(percZ), Color.Red);
+            try
+            {
+                bmp.SetPixel(Convert.ToInt32(percX), Convert.ToInt32(percZ), Color.Red);
+            } catch
+            {
+                return;
+            }
             locatorBox.Image = bmp;
         }
 
         private void locatorBox_Click(object sender, EventArgs e)
         {
-            this.FormBorderStyle = FormBorderStyle.None;
-            int window_cursor_x = Cursor.Position.X - this.Location.X - positionPanel.Location.X - locatorBox.Location.X - 25;
-            int window_cursor_y = Cursor.Position.Y - this.Location.Y - positionPanel.Location.Y - locatorBox.Location.Y - this.menuStrip1.Height - 25;
-            double ratioX = (double)window_cursor_x / (double)locatorBox.Width;
-            double ratioY = (double)window_cursor_y / (double)locatorBox.Height;
-            int actualX = Convert.ToInt32(ratioX * (double)Math.Pow(2, 24));
-            int actualY = Convert.ToInt32(ratioY * (double)Math.Pow(2, 24));
-            this.FormBorderStyle = FormBorderStyle.Sizable;
+            int window_cursor_x = locatorBox.PointToClient(Cursor.Position).X;
+            int window_cursor_y = locatorBox.PointToClient(Cursor.Position).Y;
+            double ratioX = (double)window_cursor_x / (double)locatorBox.ClientSize.Width;
+            double ratioY = (double)window_cursor_y / (double)locatorBox.ClientSize.Width;
+            if (ratioX > 1.0)
+            {
+                ratioX = 1.0;
+            }
+            int actualX = Convert.ToInt32(ratioX * (double)65535);
+            int actualY = Convert.ToInt32(ratioY * (double)65535);
             profiles[selected].SetPosition(actualX, actualY);
             ReloadPosition();
         }
@@ -471,7 +491,7 @@ namespace BuzzrodEditorGUI
         private void consTypeButton_Click(object sender, EventArgs e)
         {
             byte newValue = Convert.ToByte(listView2.SelectedItems[0].SubItems[4].Text);
-            if (newValue > 64)
+            if (newValue >= 64)
             {
                 newValue -= 64;
             } else
@@ -481,6 +501,38 @@ namespace BuzzrodEditorGUI
             profiles[selected].Patch(Convert.ToInt32(listView2.SelectedItems[0].SubItems[5].Text), newValue);
             profiles[selected].InitializeItems();
             ReloadProfileItems();
+        }
+
+        private void wikiButton_Click(object sender, EventArgs e)
+        {
+            string slug = listView2.SelectedItems[0].SubItems[1].Text.Replace(" ", "_");
+            Process p = new Process();
+            p.StartInfo = new ProcessStartInfo(Program.wikiURL + slug);
+            p.Start();
+        }
+
+        private void xTracker_Scroll(object sender, EventArgs e)
+        {
+            if (lock_) { return;  }
+            BuzzrodProfile brp = profiles[selected];
+            brp.SetPosition(xTracker.Value, brp.positionZ);
+            ReloadPosition();
+        }
+
+        private void zTracker_Scroll(object sender, EventArgs e)
+        {
+            if (lock_) { return; }
+            BuzzrodProfile brp = profiles[selected];
+            brp.SetPosition(brp.positionX, zTracker.Value);
+            ReloadPosition();
+        }
+
+        private void yTracker_Scroll(object sender, EventArgs e)
+        {
+            if (lock_) { return; }
+            BuzzrodProfile brp = profiles[selected];
+            brp.SetPositionY(yTracker.Value);
+            ReloadPosition();
         }
     }
     public class BuzzrodProfile
@@ -497,7 +549,7 @@ namespace BuzzrodEditorGUI
         private string[] environments;
         private string[] lures;
         public int positionX;
-        public uint positionY;
+        public int positionY;
         public int positionZ;
         public bool star = false;
         public bool showAll = false;
@@ -545,7 +597,7 @@ namespace BuzzrodEditorGUI
                 }
                 if ((count > 0) || (this.showAll))
                 {
-                    this.items.Add(i.ToString() + "," + this.slot_table[i] + "," + (consumptive ? count.ToString():"-") + "," + (consumptive?"Slot (consumptive)":"Slot") +  "," + rawCount.ToString() + "," + seek.ToString());
+                    this.items.Add("0x" + i.ToString("X").PadLeft(2, '0') + "," + this.slot_table[i] + "," + (consumptive ? count.ToString(): "∞") + "," + (consumptive?"Slot (consumptive)":"Slot") +  "," + rawCount.ToString() + "," + seek.ToString());
                 }
                 seek += 4;
             }
@@ -562,7 +614,7 @@ namespace BuzzrodEditorGUI
                 }
                 if ((count > 0) || (this.showAll))
                 {
-                    this.items.Add(i.ToString() + "," + this.item_table[i] + "," + count.ToString() + ",Item," + rawCount.ToString() + "," + seek.ToString());
+                    this.items.Add("0x" + i.ToString("X").PadLeft(2, '0') + "," + this.item_table[i] + "," + count.ToString() + ",Item," + rawCount.ToString() + "," + seek.ToString());
                 }
                 seek += 4;
             }
@@ -574,22 +626,25 @@ namespace BuzzrodEditorGUI
         }
 
         public void InitializePosition()     {
-            this.positionX = this.GetByte(0x5a) + (this.GetByte(0x5b) << 8) + (this.GetByte(0x5c) << 16);
-            byte[] ybytes = { this.GetByte(0x5d), this.GetByte(0x5e), this.GetByte(0x5f), this.GetByte(0x60) };
-            this.positionY = BitConverter.ToUInt32(ybytes, 0);
-            this.positionZ = this.GetByte(0x61) + (this.GetByte(0x62) << 8) + (this.GetByte(0x63) << 16);
+            this.positionX = this.GetByte(0x62) + (this.GetByte(0x63) << 8);
+            this.positionZ = this.GetByte(0x5a) + (this.GetByte(0x5b) << 8);
+            this.positionY = this.GetByte(0x5e) + (this.GetByte(0x5f) << 8);
         }
 
         public void SetPosition(int x, int z)
         {
             byte[] xbytes = BitConverter.GetBytes(x);
             byte[] zbytes = BitConverter.GetBytes(z);
-            this.Patch(0x5c, xbytes[0]);
-            this.Patch(0x5b, xbytes[1]);
-            this.Patch(0x5a, xbytes[2]);
-            this.Patch(0x63, zbytes[0]);
-            this.Patch(0x62, zbytes[1]);
-            this.Patch(0x61, zbytes[2]);
+            this.Patch(0x62, xbytes[0]);
+            this.Patch(0x63, xbytes[1]);
+            this.Patch(0x5a, zbytes[0]);
+            this.Patch(0x5b, zbytes[1]);
+        }
+        public void SetPositionY(int y)
+        {
+            byte[] ybytes = BitConverter.GetBytes(y);
+            this.Patch(0x5e, ybytes[0]);
+            this.Patch(0x5f, ybytes[1]);
         }
 
         public byte GetByte(int offset)

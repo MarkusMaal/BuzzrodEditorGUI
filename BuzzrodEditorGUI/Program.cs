@@ -11,6 +11,7 @@ namespace BuzzrodEditorGUI
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        public static string wikiURL = "https://fishingfantasy.fandom.com/wiki/";
         [STAThread]
         static void Main()
         {
