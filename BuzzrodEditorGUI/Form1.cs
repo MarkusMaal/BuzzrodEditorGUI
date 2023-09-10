@@ -580,7 +580,7 @@ namespace BuzzrodEditorGUI
             {
                 int memory = listView3.SelectedIndices[0];
                 char[] bits = listView3.SelectedItems[0].SubItems[4].Text.ToCharArray().Skip(2).ToArray();
-                bits[bits.Length - 2] = (bits[bits.Length - 2] == '1' ? '0' : '1');
+                bits[bits.Length - 1] = (bits[bits.Length - 1] == '1' ? '0' : '1');
                 byte[] bytes = { Convert.ToByte(new string(bits.Take(8).ToArray()), 2),
                                 Convert.ToByte(new string(bits.Skip(8).Take(8).ToArray()), 2),
                                 Convert.ToByte(new string(bits.Skip(16).Take(8).ToArray()), 2),
@@ -756,7 +756,7 @@ namespace BuzzrodEditorGUI
                 //if ((count > 0) || (this.showAll))
                 //{
                 // decode actual data
-                    this.lureslist.Add("0x" + i.ToString("X").PadLeft(2, '0') + "," + seek.ToString() + "," + this.lures[i] + ",0x" + rawCount.ToString("X").PadLeft(8, '0') + ",0b" + myBits + "," + ((myBits.ToCharArray().Skip(myBits.Length - 2).Take(1).ToArray()[0] == '1')?"Yes":"No"));
+                    this.lureslist.Add("0x" + i.ToString("X").PadLeft(2, '0') + "," + seek.ToString() + "," + this.lures[i] + ",0x" + rawCount.ToString("X").PadLeft(8, '0') + ",0b" + myBits + "," + ((myBits.ToCharArray().Skip(myBits.Length - 1).Take(1).ToArray()[0] == '1')?"Yes":"No"));
                 //}
                 // replace with actual offset increment
                 seek += 4;
