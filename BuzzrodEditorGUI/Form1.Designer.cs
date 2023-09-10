@@ -83,6 +83,7 @@
             this.locatorBox = new System.Windows.Forms.PictureBox();
             this.luresButton = new System.Windows.Forms.Button();
             this.luresPanel = new System.Windows.Forms.Panel();
+            this.toggleUnlockButton = new System.Windows.Forms.Button();
             this.editBinButton = new System.Windows.Forms.Button();
             this.editHexButton = new System.Windows.Forms.Button();
             this.listView3 = new System.Windows.Forms.ListView();
@@ -534,7 +535,7 @@
             this.yTracker.Location = new System.Drawing.Point(433, 150);
             this.yTracker.Maximum = 65535;
             this.yTracker.Name = "yTracker";
-            this.yTracker.Size = new System.Drawing.Size(184, 42);
+            this.yTracker.Size = new System.Drawing.Size(184, 45);
             this.yTracker.TabIndex = 2;
             this.yTracker.TickFrequency = 2000;
             this.yTracker.Scroll += new System.EventHandler(this.yTracker_Scroll);
@@ -545,7 +546,7 @@
             this.zTracker.Location = new System.Drawing.Point(432, 89);
             this.zTracker.Maximum = 65535;
             this.zTracker.Name = "zTracker";
-            this.zTracker.Size = new System.Drawing.Size(184, 42);
+            this.zTracker.Size = new System.Drawing.Size(184, 45);
             this.zTracker.TabIndex = 2;
             this.zTracker.TickFrequency = 2000;
             this.zTracker.Scroll += new System.EventHandler(this.zTracker_Scroll);
@@ -556,7 +557,7 @@
             this.xTracker.Location = new System.Drawing.Point(429, 28);
             this.xTracker.Maximum = 65535;
             this.xTracker.Name = "xTracker";
-            this.xTracker.Size = new System.Drawing.Size(184, 42);
+            this.xTracker.Size = new System.Drawing.Size(184, 45);
             this.xTracker.TabIndex = 2;
             this.xTracker.TickFrequency = 2000;
             this.xTracker.Scroll += new System.EventHandler(this.xTracker_Scroll);
@@ -622,6 +623,7 @@
             this.luresPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.luresPanel.Controls.Add(this.toggleUnlockButton);
             this.luresPanel.Controls.Add(this.editBinButton);
             this.luresPanel.Controls.Add(this.editHexButton);
             this.luresPanel.Controls.Add(this.listView3);
@@ -630,6 +632,18 @@
             this.luresPanel.Size = new System.Drawing.Size(625, 328);
             this.luresPanel.TabIndex = 3;
             this.luresPanel.Visible = false;
+            // 
+            // toggleUnlockButton
+            // 
+            this.toggleUnlockButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.toggleUnlockButton.Enabled = false;
+            this.toggleUnlockButton.Location = new System.Drawing.Point(366, 282);
+            this.toggleUnlockButton.Name = "toggleUnlockButton";
+            this.toggleUnlockButton.Size = new System.Drawing.Size(85, 23);
+            this.toggleUnlockButton.TabIndex = 2;
+            this.toggleUnlockButton.Text = "Toggle &unlock";
+            this.toggleUnlockButton.UseVisualStyleBackColor = true;
+            this.toggleUnlockButton.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // editBinButton
             // 
@@ -809,6 +823,7 @@
         private System.Windows.Forms.Button editBinButton;
         private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.Button toggleUnlockButton;
     }
 }
 

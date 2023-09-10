@@ -571,6 +571,27 @@ namespace BuzzrodEditorGUI
         {
             editBinButton.Enabled = listView3.SelectedIndices.Count > 0;
             editHexButton.Enabled = listView3.SelectedIndices.Count > 0;
+            toggleUnlockButton.Enabled = listView3.SelectedIndices.Count > 0;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (listView3.SelectedIndices.Count > 0)
+            {
+                int memory = listView3.SelectedIndices[0];
+                char[] bits = listView3.SelectedItems[0].SubItems[4].Text.ToCharArray().Skip(2).ToArray();
+                bits[bits.Length - 2] = (bits[bits.Length - 2] == '1' ? '0' : '1');
+                byte[] bytes = { Convert.ToByte(new string(bits.Take(8).ToArray()), 2),
+                                Convert.ToByte(new string(bits.Skip(8).Take(8).ToArray()), 2),
+                                Convert.ToByte(new string(bits.Skip(16).Take(8).ToArray()), 2),
+                                Convert.ToByte(new string(bits.Skip(24).Take(8).ToArray()), 2),
+                                };
+                int offset = Convert.ToInt32(listView3.SelectedItems[0].SubItems[1].Text);
+                profiles[selected].Patch(offset, bytes[bytes.Length - 1]);
+                profiles[selected].InitializeLures();
+                ReloadProfileLures();
+                listView3.SelectedIndices.Add(memory);
+            }
         }
     }
     public class BuzzrodProfile
@@ -676,6 +697,7 @@ namespace BuzzrodEditorGUI
             // requires more work reverse engineering the lure system
             // set to actual offset
             int seek = 0x4f1;
+            this.lureslist.Clear();
             for (int i = 0; i < this.lures.Length; i++)
             {
                 byte[] byte_s = new byte[4];
