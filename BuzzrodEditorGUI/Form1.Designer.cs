@@ -81,6 +81,17 @@
             this.yCoordLabel = new System.Windows.Forms.Label();
             this.xCoordLabel = new System.Windows.Forms.Label();
             this.locatorBox = new System.Windows.Forms.PictureBox();
+            this.luresButton = new System.Windows.Forms.Button();
+            this.luresPanel = new System.Windows.Forms.Panel();
+            this.editBinButton = new System.Windows.Forms.Button();
+            this.editHexButton = new System.Windows.Forms.Button();
+            this.listView3 = new System.Windows.Forms.ListView();
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.savesPanel.SuspendLayout();
             this.itemPanel.SuspendLayout();
@@ -89,6 +100,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.zTracker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xTracker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).BeginInit();
+            this.luresPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -160,7 +172,7 @@
             // button3
             // 
             this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(170, 30);
+            this.button3.Location = new System.Drawing.Point(251, 30);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 1;
@@ -594,16 +606,119 @@
             this.locatorBox.TabStop = false;
             this.locatorBox.Click += new System.EventHandler(this.locatorBox_Click);
             // 
+            // luresButton
+            // 
+            this.luresButton.Enabled = false;
+            this.luresButton.Location = new System.Drawing.Point(170, 30);
+            this.luresButton.Name = "luresButton";
+            this.luresButton.Size = new System.Drawing.Size(75, 23);
+            this.luresButton.TabIndex = 1;
+            this.luresButton.Text = "&Lures";
+            this.luresButton.UseVisualStyleBackColor = true;
+            this.luresButton.Click += new System.EventHandler(this.luresButton_Click);
+            // 
+            // luresPanel
+            // 
+            this.luresPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.luresPanel.Controls.Add(this.editBinButton);
+            this.luresPanel.Controls.Add(this.editHexButton);
+            this.luresPanel.Controls.Add(this.listView3);
+            this.luresPanel.Location = new System.Drawing.Point(0, 56);
+            this.luresPanel.Name = "luresPanel";
+            this.luresPanel.Size = new System.Drawing.Size(625, 328);
+            this.luresPanel.TabIndex = 3;
+            this.luresPanel.Visible = false;
+            // 
+            // editBinButton
+            // 
+            this.editBinButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.editBinButton.Enabled = false;
+            this.editBinButton.Location = new System.Drawing.Point(457, 282);
+            this.editBinButton.Name = "editBinButton";
+            this.editBinButton.Size = new System.Drawing.Size(75, 23);
+            this.editBinButton.TabIndex = 2;
+            this.editBinButton.Text = "Edit &binary";
+            this.editBinButton.UseVisualStyleBackColor = true;
+            // 
+            // editHexButton
+            // 
+            this.editHexButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.editHexButton.Enabled = false;
+            this.editHexButton.Location = new System.Drawing.Point(538, 282);
+            this.editHexButton.Name = "editHexButton";
+            this.editHexButton.Size = new System.Drawing.Size(75, 23);
+            this.editHexButton.TabIndex = 2;
+            this.editHexButton.Text = "Edit he&x";
+            this.editHexButton.UseVisualStyleBackColor = true;
+            // 
+            // listView3
+            // 
+            this.listView3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader7,
+            this.columnHeader11,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader12});
+            this.listView3.Cursor = System.Windows.Forms.Cursors.Default;
+            this.listView3.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.listView3.FullRowSelect = true;
+            this.listView3.GridLines = true;
+            this.listView3.HideSelection = false;
+            this.listView3.Location = new System.Drawing.Point(12, 3);
+            this.listView3.MultiSelect = false;
+            this.listView3.Name = "listView3";
+            this.listView3.Size = new System.Drawing.Size(601, 273);
+            this.listView3.TabIndex = 0;
+            this.listView3.UseCompatibleStateImageBehavior = false;
+            this.listView3.View = System.Windows.Forms.View.Details;
+            this.listView3.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listView3_ItemSelectionChanged);
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "ID";
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Offset";
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Name";
+            this.columnHeader8.Width = 131;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Hex data";
+            this.columnHeader9.Width = 121;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Binary data";
+            this.columnHeader10.Width = 80;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "Unlocked";
+            this.columnHeader12.Width = 70;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 384);
+            this.Controls.Add(this.luresPanel);
+            this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.itemPanel);
             this.Controls.Add(this.positionPanel);
-            this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.savesButton);
             this.Controls.Add(this.button3);
+            this.Controls.Add(this.luresButton);
             this.Controls.Add(this.itemsButton);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -624,6 +739,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.zTracker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xTracker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).EndInit();
+            this.luresPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -682,6 +798,17 @@
         private System.Windows.Forms.TrackBar xTracker;
         private System.Windows.Forms.TrackBar zTracker;
         private System.Windows.Forms.TrackBar yTracker;
+        private System.Windows.Forms.Button luresButton;
+        private System.Windows.Forms.Panel luresPanel;
+        private System.Windows.Forms.Button editHexButton;
+        private System.Windows.Forms.ListView listView3;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.Button editBinButton;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
     }
 }
 

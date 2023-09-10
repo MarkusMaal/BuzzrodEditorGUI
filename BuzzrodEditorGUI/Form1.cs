@@ -102,12 +102,14 @@ namespace BuzzrodEditorGUI
 
         private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            replaceButton.Enabled = listView1.SelectedItems.Count > 0;
-            extractButton.Enabled = listView1.SelectedItems.Count > 0;
-            deleteButton.Enabled = listView1.SelectedItems.Count > 0;
-            itemsButton.Enabled = listView1.SelectedItems.Count > 0;
-            areaButton.Enabled = listView1.SelectedItems.Count > 0;
-            button3.Enabled = listView1.SelectedIndices.Count > 0;
+            bool enable = listView1.SelectedItems.Count > 0;
+            replaceButton.Enabled = enable;
+            extractButton.Enabled = enable;
+            deleteButton.Enabled = enable;
+            itemsButton.Enabled = enable;
+            areaButton.Enabled = enable;
+            button3.Enabled = enable;
+            luresButton.Enabled = enable;
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -201,9 +203,11 @@ namespace BuzzrodEditorGUI
             itemPanel.Visible = true;
             savesPanel.Visible = false;
             savesButton.Enabled = true;
+            luresPanel.Visible = false;
             button3.Enabled = true;
             itemsButton.Enabled = false;
             positionPanel.Visible = false;
+            luresButton.Enabled = true;
             ReloadProfileItems();
         }
 
@@ -219,6 +223,17 @@ namespace BuzzrodEditorGUI
 
         }
 
+        private void ReloadProfileLures()
+        {
+            listView3.Items.Clear();
+            foreach (string lurestr in profiles[selected].lureslist)
+            {
+                string[] row = lurestr.Split(',');
+                ListViewItem lvi = new ListViewItem( row);
+                listView3.Items.Add(lvi);
+            }
+        }
+
         private void savesButton_Click(object sender, EventArgs e)
         {
             savesButton.Enabled = false;
@@ -227,6 +242,8 @@ namespace BuzzrodEditorGUI
             savesPanel.Visible = true;
             itemPanel.Visible = false;
             positionPanel.Visible = false;
+            luresButton.Enabled = true;
+            luresPanel.Visible = false;
             ReloadProfileList();
         }
 
@@ -441,10 +458,12 @@ namespace BuzzrodEditorGUI
             }
             savesPanel.Visible = false;
             itemPanel.Visible = false;
+            luresPanel.Visible = false;
             positionPanel.Visible = true;
             savesButton.Enabled = true;
             itemsButton.Enabled = true;
             button3.Enabled = false;
+            luresButton.Enabled = true;
         }
 
         private void ReloadPosition()
@@ -534,6 +553,25 @@ namespace BuzzrodEditorGUI
             brp.SetPositionY(yTracker.Value);
             ReloadPosition();
         }
+
+        private void luresButton_Click(object sender, EventArgs e)
+        {
+            itemPanel.Visible = false;
+            savesPanel.Visible = false;
+            savesButton.Enabled = true;
+            luresPanel.Visible = true;
+            button3.Enabled = true;
+            itemsButton.Enabled = true;
+            positionPanel.Visible = false;
+            luresButton.Enabled = false;
+            ReloadProfileLures();
+        }
+
+        private void listView3_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            editBinButton.Enabled = listView3.SelectedIndices.Count > 0;
+            editHexButton.Enabled = listView3.SelectedIndices.Count > 0;
+        }
     }
     public class BuzzrodProfile
     {
@@ -543,6 +581,7 @@ namespace BuzzrodEditorGUI
         public string datetime;
         public int weight;
         public List<string> items = new List<string>();
+        public List<string> lureslist = new List<string>();
         private byte[] data;
         private string[] slot_table;
         private string[] item_table;
@@ -625,10 +664,33 @@ namespace BuzzrodEditorGUI
             this.data[offset] = value;
         }
 
-        public void InitializePosition()     {
+        public void InitializePosition()
+        {
             this.positionX = this.GetByte(0x62) + (this.GetByte(0x63) << 8);
             this.positionZ = this.GetByte(0x5a) + (this.GetByte(0x5b) << 8);
             this.positionY = this.GetByte(0x5e) + (this.GetByte(0x5f) << 8);
+        }
+
+        public void InitializeLures()
+        {
+            // requires more work reverse engineering the lure system
+            // set to actual offset
+            int seek = 0x4f1;
+            for (int i = 0; i < this.lures.Length; i++)
+            {
+                byte[] byte_s = new byte[4];
+                Array.Copy(this.data, seek, byte_s, 0, 4);
+                int count = BitConverter.ToInt32(byte_s, 0) / 2;
+                int rawCount = BitConverter.ToInt32(byte_s, 0);
+                string myBits = Convert.ToString(rawCount, 2).PadLeft(32, '0');
+                //if ((count > 0) || (this.showAll))
+                //{
+                // decode actual data
+                    this.lureslist.Add("0x" + i.ToString("X").PadLeft(2, '0') + "," + seek.ToString() + "," + this.lures[i] + ",0x" + rawCount.ToString("X").PadLeft(8, '0') + ",0b" + myBits + "," + ((myBits.ToCharArray().Skip(myBits.Length - 2).Take(1).ToArray()[0] == '1')?"Yes":"No"));
+                //}
+                // replace with actual offset increment
+                seek += 4;
+            }
         }
 
         public void SetPosition(int x, int z)
@@ -687,6 +749,7 @@ namespace BuzzrodEditorGUI
             this.weight = BitConverter.ToInt32(weightbytes, 0);
             this.datetime = BitConverter.ToInt32(yearbytes, 0).ToString("D4") + "/" + month.ToString("D2") + "/" + day.ToString("D2") + " " + hour.ToString("D2") + ":" + minute.ToString("D2");
             this.InitializeItems();
+            this.InitializeLures();
         }
 
         public byte[] GetData()
