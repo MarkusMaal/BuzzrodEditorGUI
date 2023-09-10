@@ -570,8 +570,10 @@ namespace BuzzrodEditorGUI
         private void listView3_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             editBinButton.Enabled = listView3.SelectedIndices.Count > 0;
+            editSlotsButton.Enabled = listView3.SelectedIndices.Count > 0;
             editHexButton.Enabled = listView3.SelectedIndices.Count > 0;
             toggleUnlockButton.Enabled = listView3.SelectedIndices.Count > 0;
+            setActiveButton.Enabled = listView3.SelectedIndices.Count > 0;
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -630,6 +632,51 @@ namespace BuzzrodEditorGUI
                                 Convert.ToByte(ve.valueBox.Text.Substring(2, 2), 16),
                                 Convert.ToByte(ve.valueBox.Text.Substring(4, 2), 16),
                                 Convert.ToByte(ve.valueBox.Text.Substring(6, 2), 16)
+                                };
+                int offset = Convert.ToInt32(listView3.SelectedItems[0].SubItems[1].Text);
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    profiles[selected].Patch(offset + i, bytes[bytes.Length - 1 - i]);
+                }
+                profiles[selected].InitializeLures();
+                ReloadProfileLures();
+                listView3.SelectedIndices.Add(memory);
+            }
+        }
+
+        private void setActiveButton_Click(object sender, EventArgs e)
+        {
+            int lureId = listView3.SelectedIndices[0];
+            profiles[selected].Patch(0x68, Convert.ToByte(lureId));
+            profiles[selected].Patch(0xF, Convert.ToByte(lureId));
+            profiles[selected].InitializeProfile();
+            ReloadProfileList();
+            ReloadProfileLures();
+            listView3.SelectedIndices.Add(lureId);
+        }
+
+        private void editSlotsButton_Click(object sender, EventArgs e)
+        {
+            SlotEdit se = new SlotEdit();
+            string myBits = listView3.SelectedItems[0].SubItems[4].Text.Substring(2);
+            se.slots[0] = Convert.ToInt32(Convert.ToByte("0" + myBits.Substring(1, 7), 2));
+            se.slots[1] = Convert.ToInt32(Convert.ToByte("0" + myBits.Substring(8, 7), 2));
+            se.slots[2] = Convert.ToInt32(Convert.ToByte("0" + myBits.Substring(15, 7), 2));
+            se.slots[3] = Convert.ToInt32(Convert.ToByte("0" + myBits.Substring(22, 7), 2));
+            se.slot_table = profiles[selected].GetSlotsTable();
+            if (se.ShowDialog() == DialogResult.OK)
+            {
+                int memory = listView3.SelectedIndices[0];
+                myBits = myBits.Substring(0, 1) +
+                    Convert.ToString(se.slots[0], 2).PadLeft(8, '0').Substring(1) +
+                    Convert.ToString(se.slots[1], 2).PadLeft(8, '0').Substring(1) +
+                    Convert.ToString(se.slots[2], 2).PadLeft(8, '0').Substring(1) +
+                    Convert.ToString(se.slots[3], 2).PadLeft(8, '0').Substring(1) +
+                    myBits.Substring(28, 3);
+                byte[] bytes = { Convert.ToByte(myBits.Substring(0, 8), 2),
+                                Convert.ToByte(myBits.Substring(8, 8), 2),
+                                Convert.ToByte(myBits.Substring(16, 8), 2),
+                                Convert.ToByte(myBits.Substring(24, 8), 2)
                                 };
                 int offset = Convert.ToInt32(listView3.SelectedItems[0].SubItems[1].Text);
                 for (int i = 0; i < bytes.Length; i++)
@@ -746,6 +793,7 @@ namespace BuzzrodEditorGUI
             // set to actual offset
             int seek = 0x4f1;
             this.lureslist.Clear();
+            byte activeLure = this.GetByte(0x68);
             for (int i = 0; i < this.lures.Length; i++)
             {
                 byte[] byte_s = new byte[4];
@@ -753,12 +801,29 @@ namespace BuzzrodEditorGUI
                 int count = BitConverter.ToInt32(byte_s, 0) / 2;
                 int rawCount = BitConverter.ToInt32(byte_s, 0);
                 string myBits = Convert.ToString(rawCount, 2).PadLeft(32, '0');
-                //if ((count > 0) || (this.showAll))
-                //{
+                string lureStrList = "";
+                int slot1 = Convert.ToInt32(Convert.ToByte("0" + myBits.Substring(1, 7), 2));
+                int slot2 = Convert.ToInt32(Convert.ToByte("0" + myBits.Substring(8, 7), 2));
+                int slot3 = Convert.ToInt32(Convert.ToByte("0" + myBits.Substring(15, 7), 2));
+                int slot4 = Convert.ToInt32(Convert.ToByte("0" + myBits.Substring(22, 7), 2));
+                string s1 = "null";
+                string s2 = "null";
+                string s3 = "null";
+                string s4 = "null";
+                if (slot1 == 127) { s1 = "Empty"; }
+                else if (slot1 < this.slot_table.Length) { s1 = this.slot_table[slot1]; }
+                if (slot2 == 127) { s2 = "Empty"; }
+                else if (slot2 < this.slot_table.Length) { s2 = this.slot_table[slot2]; }
+                if (slot3 == 127) { s3 = "Empty"; }
+                else if (slot3 < this.slot_table.Length) { s3 = this.slot_table[slot3]; }
+                if (slot4 == 127) { s4 = "Empty"; }
+                else if (slot4 < this.slot_table.Length) { s4 = this.slot_table[slot4]; }
+                lureStrList = (s1!="Empty"?s1 + "+":"") + (s2 != "Empty" ? s2 + "+" : "") + (s3 != "Empty" ? s3 + "+" : "") + (s4 != "Empty" ? s4 + "+" : "");
+                lureStrList = (lureStrList.EndsWith("+") ? lureStrList.Substring(0, lureStrList.Length - 1) : lureStrList);
+                bool sel = Convert.ToInt32(activeLure) == i;
+
                 // decode actual data
-                    this.lureslist.Add("0x" + i.ToString("X").PadLeft(2, '0') + "," + seek.ToString() + "," + this.lures[i] + ",0x" + rawCount.ToString("X").PadLeft(8, '0') + ",0b" + myBits + "," + ((myBits.ToCharArray().Skip(myBits.Length - 1).Take(1).ToArray()[0] == '1')?"Yes":"No"));
-                //}
-                // replace with actual offset increment
+                this.lureslist.Add((sel?"*":"") + "0x" + i.ToString("X").PadLeft(2, '0') + "," + seek.ToString() + "," + this.lures[i] + ",0x" + rawCount.ToString("X").PadLeft(8, '0') + ",0b" + myBits + "," + ((myBits.ToCharArray().Skip(myBits.Length - 1).Take(1).ToArray()[0] == '1')?"Yes":"No") + "," + lureStrList);
                 seek += 4;
             }
         }
@@ -772,6 +837,7 @@ namespace BuzzrodEditorGUI
             this.Patch(0x5a, zbytes[0]);
             this.Patch(0x5b, zbytes[1]);
         }
+
         public void SetPositionY(int y)
         {
             byte[] ybytes = BitConverter.GetBytes(y);

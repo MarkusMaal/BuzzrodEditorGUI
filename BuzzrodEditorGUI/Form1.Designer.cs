@@ -80,9 +80,10 @@
             this.zCoordLabel = new System.Windows.Forms.Label();
             this.yCoordLabel = new System.Windows.Forms.Label();
             this.xCoordLabel = new System.Windows.Forms.Label();
-            this.locatorBox = new System.Windows.Forms.PictureBox();
             this.luresButton = new System.Windows.Forms.Button();
             this.luresPanel = new System.Windows.Forms.Panel();
+            this.editSlotsButton = new System.Windows.Forms.Button();
+            this.setActiveButton = new System.Windows.Forms.Button();
             this.toggleUnlockButton = new System.Windows.Forms.Button();
             this.editBinButton = new System.Windows.Forms.Button();
             this.editHexButton = new System.Windows.Forms.Button();
@@ -93,6 +94,8 @@
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.locatorBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.savesPanel.SuspendLayout();
             this.itemPanel.SuspendLayout();
@@ -100,8 +103,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.yTracker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zTracker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xTracker)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).BeginInit();
             this.luresPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).BeginInit();
             this.SuspendLayout();
             // 
             // listView1
@@ -592,21 +595,6 @@
             this.xCoordLabel.TabIndex = 1;
             this.xCoordLabel.Text = "Position X: null";
             // 
-            // locatorBox
-            // 
-            this.locatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.locatorBox.BackColor = System.Drawing.Color.Black;
-            this.locatorBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.locatorBox.Location = new System.Drawing.Point(3, 3);
-            this.locatorBox.Name = "locatorBox";
-            this.locatorBox.Size = new System.Drawing.Size(420, 322);
-            this.locatorBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.locatorBox.TabIndex = 0;
-            this.locatorBox.TabStop = false;
-            this.locatorBox.Click += new System.EventHandler(this.locatorBox_Click);
-            // 
             // luresButton
             // 
             this.luresButton.Enabled = false;
@@ -623,6 +611,8 @@
             this.luresPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.luresPanel.Controls.Add(this.editSlotsButton);
+            this.luresPanel.Controls.Add(this.setActiveButton);
             this.luresPanel.Controls.Add(this.toggleUnlockButton);
             this.luresPanel.Controls.Add(this.editBinButton);
             this.luresPanel.Controls.Add(this.editHexButton);
@@ -632,6 +622,30 @@
             this.luresPanel.Size = new System.Drawing.Size(625, 328);
             this.luresPanel.TabIndex = 3;
             this.luresPanel.Visible = false;
+            // 
+            // editSlotsButton
+            // 
+            this.editSlotsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.editSlotsButton.Enabled = false;
+            this.editSlotsButton.Location = new System.Drawing.Point(184, 282);
+            this.editSlotsButton.Name = "editSlotsButton";
+            this.editSlotsButton.Size = new System.Drawing.Size(85, 23);
+            this.editSlotsButton.TabIndex = 2;
+            this.editSlotsButton.Text = "Edit sl&ots";
+            this.editSlotsButton.UseVisualStyleBackColor = true;
+            this.editSlotsButton.Click += new System.EventHandler(this.editSlotsButton_Click);
+            // 
+            // setActiveButton
+            // 
+            this.setActiveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.setActiveButton.Enabled = false;
+            this.setActiveButton.Location = new System.Drawing.Point(275, 282);
+            this.setActiveButton.Name = "setActiveButton";
+            this.setActiveButton.Size = new System.Drawing.Size(85, 23);
+            this.setActiveButton.TabIndex = 2;
+            this.setActiveButton.Text = "Set &active";
+            this.setActiveButton.UseVisualStyleBackColor = true;
+            this.setActiveButton.Click += new System.EventHandler(this.setActiveButton_Click);
             // 
             // toggleUnlockButton
             // 
@@ -680,7 +694,8 @@
             this.columnHeader8,
             this.columnHeader9,
             this.columnHeader10,
-            this.columnHeader12});
+            this.columnHeader12,
+            this.columnHeader13});
             this.listView3.Cursor = System.Windows.Forms.Cursors.Default;
             this.listView3.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.listView3.FullRowSelect = true;
@@ -698,6 +713,7 @@
             // columnHeader7
             // 
             this.columnHeader7.Text = "ID";
+            this.columnHeader7.Width = 54;
             // 
             // columnHeader11
             // 
@@ -706,12 +722,12 @@
             // columnHeader8
             // 
             this.columnHeader8.Text = "Name";
-            this.columnHeader8.Width = 131;
+            this.columnHeader8.Width = 112;
             // 
             // columnHeader9
             // 
             this.columnHeader9.Text = "Hex data";
-            this.columnHeader9.Width = 121;
+            this.columnHeader9.Width = 91;
             // 
             // columnHeader10
             // 
@@ -722,6 +738,26 @@
             // 
             this.columnHeader12.Text = "Unlocked";
             this.columnHeader12.Width = 70;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Slots";
+            this.columnHeader13.Width = 120;
+            // 
+            // locatorBox
+            // 
+            this.locatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.locatorBox.BackColor = System.Drawing.Color.Black;
+            this.locatorBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.locatorBox.Location = new System.Drawing.Point(3, 3);
+            this.locatorBox.Name = "locatorBox";
+            this.locatorBox.Size = new System.Drawing.Size(420, 322);
+            this.locatorBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.locatorBox.TabIndex = 0;
+            this.locatorBox.TabStop = false;
+            this.locatorBox.Click += new System.EventHandler(this.locatorBox_Click);
             // 
             // Form1
             // 
@@ -754,8 +790,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.yTracker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zTracker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xTracker)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).EndInit();
             this.luresPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -826,6 +862,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.ColumnHeader columnHeader12;
         private System.Windows.Forms.Button toggleUnlockButton;
+        private System.Windows.Forms.Button setActiveButton;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.Button editSlotsButton;
     }
 }
 
