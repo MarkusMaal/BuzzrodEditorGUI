@@ -593,6 +593,54 @@ namespace BuzzrodEditorGUI
                 listView3.SelectedIndices.Add(memory);
             }
         }
+
+        private void editBinButton_Click(object sender, EventArgs e)
+        {
+            ValueEdit ve = new ValueEdit();
+            ve.current = listView3.SelectedItems[0].SubItems[4].Text.Substring(2);
+            ve.valueBox.Text = ve.current;
+            if (ve.ShowDialog() == DialogResult.OK)
+            {
+                int memory = listView3.SelectedIndices[0];
+                byte[] bytes = { Convert.ToByte(ve.valueBox.Text.Substring(0, 8), 2),
+                                Convert.ToByte(ve.valueBox.Text.Substring(8, 8), 2),
+                                Convert.ToByte(ve.valueBox.Text.Substring(16, 8), 2),
+                                Convert.ToByte(ve.valueBox.Text.Substring(24, 8), 2)
+                                };
+                int offset = Convert.ToInt32(listView3.SelectedItems[0].SubItems[1].Text);
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    profiles[selected].Patch(offset + i, bytes[bytes.Length - 1 - i]);
+                }
+                profiles[selected].InitializeLures();
+                ReloadProfileLures();
+                listView3.SelectedIndices.Add(memory);
+            }
+        }
+
+        private void editHexButton_Click(object sender, EventArgs e)
+        {
+            ValueEdit ve = new ValueEdit();
+            ve.current = listView3.SelectedItems[0].SubItems[3].Text.Substring(2);
+            ve.valueBox.Text = ve.current;
+            if (ve.ShowDialog() == DialogResult.OK)
+            {
+                int memory = listView3.SelectedIndices[0];
+                byte[] bytes = { Convert.ToByte(ve.valueBox.Text.Substring(0, 2), 16),
+                                Convert.ToByte(ve.valueBox.Text.Substring(2, 2), 16),
+                                Convert.ToByte(ve.valueBox.Text.Substring(4, 2), 16),
+                                Convert.ToByte(ve.valueBox.Text.Substring(6, 2), 16)
+                                };
+                int offset = Convert.ToInt32(listView3.SelectedItems[0].SubItems[1].Text);
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    profiles[selected].Patch(offset + i, bytes[bytes.Length - 1 - i]);
+                }
+                profiles[selected].InitializeLures();
+                ReloadProfileLures();
+                listView3.SelectedIndices.Add(memory);
+            }
+        }
     }
     public class BuzzrodProfile
     {

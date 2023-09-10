@@ -535,7 +535,7 @@
             this.yTracker.Location = new System.Drawing.Point(433, 150);
             this.yTracker.Maximum = 65535;
             this.yTracker.Name = "yTracker";
-            this.yTracker.Size = new System.Drawing.Size(184, 45);
+            this.yTracker.Size = new System.Drawing.Size(184, 42);
             this.yTracker.TabIndex = 2;
             this.yTracker.TickFrequency = 2000;
             this.yTracker.Scroll += new System.EventHandler(this.yTracker_Scroll);
@@ -546,7 +546,7 @@
             this.zTracker.Location = new System.Drawing.Point(432, 89);
             this.zTracker.Maximum = 65535;
             this.zTracker.Name = "zTracker";
-            this.zTracker.Size = new System.Drawing.Size(184, 45);
+            this.zTracker.Size = new System.Drawing.Size(184, 42);
             this.zTracker.TabIndex = 2;
             this.zTracker.TickFrequency = 2000;
             this.zTracker.Scroll += new System.EventHandler(this.zTracker_Scroll);
@@ -557,7 +557,7 @@
             this.xTracker.Location = new System.Drawing.Point(429, 28);
             this.xTracker.Maximum = 65535;
             this.xTracker.Name = "xTracker";
-            this.xTracker.Size = new System.Drawing.Size(184, 45);
+            this.xTracker.Size = new System.Drawing.Size(184, 42);
             this.xTracker.TabIndex = 2;
             this.xTracker.TickFrequency = 2000;
             this.xTracker.Scroll += new System.EventHandler(this.xTracker_Scroll);
@@ -655,6 +655,7 @@
             this.editBinButton.TabIndex = 2;
             this.editBinButton.Text = "Edit &binary";
             this.editBinButton.UseVisualStyleBackColor = true;
+            this.editBinButton.Click += new System.EventHandler(this.editBinButton_Click);
             // 
             // editHexButton
             // 
@@ -666,6 +667,7 @@
             this.editHexButton.TabIndex = 2;
             this.editHexButton.Text = "Edit he&x";
             this.editHexButton.UseVisualStyleBackColor = true;
+            this.editHexButton.Click += new System.EventHandler(this.editHexButton_Click);
             // 
             // listView3
             // 
