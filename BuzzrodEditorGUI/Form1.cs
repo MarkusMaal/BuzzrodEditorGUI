@@ -24,6 +24,9 @@ namespace BuzzrodEditorGUI
         int selected = -1;
         string save_file = "";
 
+        float cMultiX = 1.8f;
+        float cMultiY = 2f;
+
         public Form1()
         {
             InitializeComponent();
@@ -59,6 +62,7 @@ namespace BuzzrodEditorGUI
                 {
                     MessageBox.Show("Warning! Smaller file size than expected! Save file will be shown as corrupt in-game! Please use \"Extract\" function to copy good profiles to another save file.", "Buzzrod Save Editor open function", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+                savesButton.PerformClick();
                 List<BuzzrodProfile> brps = new List<BuzzrodProfile>();
                 for (int i = 0; i < 5; i++)
                 {
@@ -474,19 +478,48 @@ namespace BuzzrodEditorGUI
             yCoordLabel.Text = "Y: " + brp.positionY.ToString();
             zCoordLabel.Text = "Z: " + brp.positionZ.ToString();
             lock_ = true;
-            xTracker.Value = brp.positionX;
-            yTracker.Value = brp.positionY;
-            zTracker.Value = brp.positionZ;
+            try
+            {
+                xValue.Text = brp.positionX.ToString();
+                yValue.Text = brp.positionY.ToString();
+                zValue.Text = brp.positionZ.ToString();
+            } catch (Exception ex) { }
             lock_ = false;
-            double percX = (((double)brp.positionX / (double)65535) * 200);
-            double percZ = (((double)brp.positionZ / (double)65535) * 100);
+            float multiX = 2f;
+            float multiY = 1.8f;
+            switch (brp.area)
+            {
+                case "The Lost Ruins":
+                    multiX = 2f;
+                    multiY = 1.8f;
+                    break;
+                //case "The Missing Jungle":
+                //    multiX = 2.4f;
+                //    multiY = 1.1f;
+                //    break;
+                default:
+                    multiX = cMultiX;
+                    multiY = cMultiY;
+                    break;
+            }
+            float absX = brp.positionX * multiX;
+            float absZ = brp.positionZ * multiY;
+
+            double percX = 100.0 + (double)absX;
+            double percZ = 50.0 + (double)absZ;
             Bitmap bmp = new Bitmap(200, 100);
             try
             {
                 bmp.SetPixel(Convert.ToInt32(percX), Convert.ToInt32(percZ), Color.Red);
             } catch
             {
-                return;
+                try
+                {
+                    bmp.SetPixel(Convert.ToInt32(percX), Convert.ToInt32(50.0 + (double)(brp.positionZ * 1.1f)), Color.Lime);
+                } catch
+                {
+                    bmp.SetPixel(Convert.ToInt32(percX), 99, Color.Aqua);
+                }
             }
             locatorBox.Image = bmp;
         }
@@ -528,30 +561,6 @@ namespace BuzzrodEditorGUI
             Process p = new Process();
             p.StartInfo = new ProcessStartInfo(Program.wikiURL + slug);
             p.Start();
-        }
-
-        private void xTracker_Scroll(object sender, EventArgs e)
-        {
-            if (lock_) { return;  }
-            BuzzrodProfile brp = profiles[selected];
-            brp.SetPosition(xTracker.Value, brp.positionZ);
-            ReloadPosition();
-        }
-
-        private void zTracker_Scroll(object sender, EventArgs e)
-        {
-            if (lock_) { return; }
-            BuzzrodProfile brp = profiles[selected];
-            brp.SetPosition(brp.positionX, zTracker.Value);
-            ReloadPosition();
-        }
-
-        private void yTracker_Scroll(object sender, EventArgs e)
-        {
-            if (lock_) { return; }
-            BuzzrodProfile brp = profiles[selected];
-            brp.SetPositionY(yTracker.Value);
-            ReloadPosition();
         }
 
         private void luresButton_Click(object sender, EventArgs e)
@@ -688,6 +697,23 @@ namespace BuzzrodEditorGUI
                 listView3.SelectedIndices.Add(memory);
             }
         }
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            try
+            {
+                xValue.Text = xValue.Text.Replace(".", ",");
+                yValue.Text = yValue.Text.Replace(".", ",");
+                zValue.Text = zValue.Text.Replace(".", ",");
+                BuzzrodProfile brp = profiles[selected];
+                brp.SetPosition(Convert.ToSingle(xValue.Text), Convert.ToSingle(zValue.Text));
+                brp.SetPositionY(Convert.ToSingle(yValue.Text));
+                ReloadPosition();
+            } catch
+            {
+                ReloadPosition();
+            }
+        }
     }
     public class BuzzrodProfile
     {
@@ -703,9 +729,9 @@ namespace BuzzrodEditorGUI
         private string[] item_table;
         private string[] environments;
         private string[] lures;
-        public int positionX;
-        public int positionY;
-        public int positionZ;
+        public float positionX;
+        public float positionY;
+        public float positionZ;
         public bool star = false;
         public bool showAll = false;
         public BuzzrodProfile(int offset = 0, byte[] data = null)
@@ -782,9 +808,25 @@ namespace BuzzrodEditorGUI
 
         public void InitializePosition()
         {
-            this.positionX = this.GetByte(0x62) + (this.GetByte(0x63) << 8);
-            this.positionZ = this.GetByte(0x5a) + (this.GetByte(0x5b) << 8);
-            this.positionY = this.GetByte(0x5e) + (this.GetByte(0x5f) << 8);
+            // identified position bytes by running the game in an emulator, then finding the position using cheat engine, and finally
+            // cross referencing those values with the save file
+            // the values appeared identical except Y, which has a higher value by 0x10 in the save file
+            byte[] x = { this.GetByte(0x58), this.GetByte(0x59), this.GetByte(0x5a), this.GetByte(0x5b) };
+            byte[] y = { this.GetByte(0x5c), this.GetByte(0x5d), this.GetByte(0x5e), this.GetByte(0x5f) };
+            byte[] z = { this.GetByte(0x60), this.GetByte(0x61), this.GetByte(0x62), this.GetByte(0x63) };
+            this.positionX = BitConverter.ToSingle(x, 0);
+            this.positionY = BitConverter.ToSingle(y, 0);
+            this.positionZ = BitConverter.ToSingle(z, 0);
+        }
+
+
+        public uint GetUnsigned16(int i)
+        {
+            if (i < -32768)
+            {
+                return 0;
+            }
+            return checked((uint)i);
         }
 
         public void InitializeLures()
@@ -828,21 +870,28 @@ namespace BuzzrodEditorGUI
             }
         }
 
-        public void SetPosition(int x, int z)
+        public void SetPosition(float x, float z)
         {
             byte[] xbytes = BitConverter.GetBytes(x);
             byte[] zbytes = BitConverter.GetBytes(z);
-            this.Patch(0x62, xbytes[0]);
-            this.Patch(0x63, xbytes[1]);
-            this.Patch(0x5a, zbytes[0]);
-            this.Patch(0x5b, zbytes[1]);
+            this.Patch(0x58, xbytes[0]);
+            this.Patch(0x59, xbytes[1]);
+            this.Patch(0x5a, xbytes[2]);
+            this.Patch(0x5b, xbytes[3]);
+            this.Patch(0x60, zbytes[0]);
+            this.Patch(0x61, zbytes[1]);
+            this.Patch(0x62, zbytes[2]);
+            this.Patch(0x63, zbytes[3]);
         }
 
-        public void SetPositionY(int y)
+        public void SetPositionY(float y)
         {
+            
             byte[] ybytes = BitConverter.GetBytes(y);
-            this.Patch(0x5e, ybytes[0]);
-            this.Patch(0x5f, ybytes[1]);
+            this.Patch(0x5c, ybytes[0]);
+            this.Patch(0x5d, ybytes[1]);
+            this.Patch(0x5e, ybytes[2]);
+            this.Patch(0x5f, ybytes[3]);
         }
 
         public byte GetByte(int offset)

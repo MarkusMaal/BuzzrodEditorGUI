@@ -74,12 +74,15 @@
             this.button7 = new System.Windows.Forms.Button();
             this.savesButton = new System.Windows.Forms.Button();
             this.positionPanel = new System.Windows.Forms.Panel();
-            this.yTracker = new System.Windows.Forms.TrackBar();
-            this.zTracker = new System.Windows.Forms.TrackBar();
-            this.xTracker = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.zValue = new System.Windows.Forms.TextBox();
+            this.yValue = new System.Windows.Forms.TextBox();
+            this.xValue = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.zCoordLabel = new System.Windows.Forms.Label();
             this.yCoordLabel = new System.Windows.Forms.Label();
             this.xCoordLabel = new System.Windows.Forms.Label();
+            this.locatorBox = new System.Windows.Forms.PictureBox();
             this.luresButton = new System.Windows.Forms.Button();
             this.luresPanel = new System.Windows.Forms.Panel();
             this.editSlotsButton = new System.Windows.Forms.Button();
@@ -95,16 +98,12 @@
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.locatorBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.savesPanel.SuspendLayout();
             this.itemPanel.SuspendLayout();
             this.positionPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.yTracker)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zTracker)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xTracker)).BeginInit();
-            this.luresPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).BeginInit();
+            this.luresPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -519,9 +518,11 @@
             this.positionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.positionPanel.Controls.Add(this.yTracker);
-            this.positionPanel.Controls.Add(this.zTracker);
-            this.positionPanel.Controls.Add(this.xTracker);
+            this.positionPanel.Controls.Add(this.label1);
+            this.positionPanel.Controls.Add(this.zValue);
+            this.positionPanel.Controls.Add(this.yValue);
+            this.positionPanel.Controls.Add(this.xValue);
+            this.positionPanel.Controls.Add(this.button1);
             this.positionPanel.Controls.Add(this.zCoordLabel);
             this.positionPanel.Controls.Add(this.yCoordLabel);
             this.positionPanel.Controls.Add(this.xCoordLabel);
@@ -532,44 +533,60 @@
             this.positionPanel.TabIndex = 5;
             this.positionPanel.Visible = false;
             // 
-            // yTracker
+            // label1
             // 
-            this.yTracker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.yTracker.Location = new System.Drawing.Point(433, 150);
-            this.yTracker.Maximum = 65535;
-            this.yTracker.Name = "yTracker";
-            this.yTracker.Size = new System.Drawing.Size(184, 42);
-            this.yTracker.TabIndex = 2;
-            this.yTracker.TickFrequency = 2000;
-            this.yTracker.Scroll += new System.EventHandler(this.yTracker_Scroll);
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Location = new System.Drawing.Point(432, 180);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(190, 139);
+            this.label1.TabIndex = 5;
+            this.label1.Text = resources.GetString("label1.Text");
+            this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // zTracker
+            // zValue
             // 
-            this.zTracker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.zTracker.Location = new System.Drawing.Point(432, 89);
-            this.zTracker.Maximum = 65535;
-            this.zTracker.Name = "zTracker";
-            this.zTracker.Size = new System.Drawing.Size(184, 42);
-            this.zTracker.TabIndex = 2;
-            this.zTracker.TickFrequency = 2000;
-            this.zTracker.Scroll += new System.EventHandler(this.zTracker_Scroll);
+            this.zValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.zValue.Location = new System.Drawing.Point(430, 128);
+            this.zValue.Name = "zValue";
+            this.zValue.Size = new System.Drawing.Size(184, 20);
+            this.zValue.TabIndex = 4;
             // 
-            // xTracker
+            // yValue
             // 
-            this.xTracker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.xTracker.Location = new System.Drawing.Point(429, 28);
-            this.xTracker.Maximum = 65535;
-            this.xTracker.Name = "xTracker";
-            this.xTracker.Size = new System.Drawing.Size(184, 42);
-            this.xTracker.TabIndex = 2;
-            this.xTracker.TickFrequency = 2000;
-            this.xTracker.Scroll += new System.EventHandler(this.xTracker_Scroll);
+            this.yValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.yValue.Location = new System.Drawing.Point(428, 76);
+            this.yValue.Name = "yValue";
+            this.yValue.Size = new System.Drawing.Size(184, 20);
+            this.yValue.TabIndex = 4;
+            // 
+            // xValue
+            // 
+            this.xValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.xValue.Location = new System.Drawing.Point(429, 28);
+            this.xValue.Name = "xValue";
+            this.xValue.Size = new System.Drawing.Size(184, 20);
+            this.xValue.TabIndex = 4;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(537, 154);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Apply";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
             // zCoordLabel
             // 
             this.zCoordLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.zCoordLabel.AutoSize = true;
-            this.zCoordLabel.Location = new System.Drawing.Point(430, 73);
+            this.zCoordLabel.Location = new System.Drawing.Point(429, 112);
             this.zCoordLabel.Name = "zCoordLabel";
             this.zCoordLabel.Size = new System.Drawing.Size(76, 13);
             this.zCoordLabel.TabIndex = 1;
@@ -579,7 +596,7 @@
             // 
             this.yCoordLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.yCoordLabel.AutoSize = true;
-            this.yCoordLabel.Location = new System.Drawing.Point(429, 134);
+            this.yCoordLabel.Location = new System.Drawing.Point(429, 60);
             this.yCoordLabel.Name = "yCoordLabel";
             this.yCoordLabel.Size = new System.Drawing.Size(79, 13);
             this.yCoordLabel.TabIndex = 1;
@@ -594,6 +611,20 @@
             this.xCoordLabel.Size = new System.Drawing.Size(76, 13);
             this.xCoordLabel.TabIndex = 1;
             this.xCoordLabel.Text = "Position X: null";
+            // 
+            // locatorBox
+            // 
+            this.locatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.locatorBox.BackColor = System.Drawing.Color.Black;
+            this.locatorBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.locatorBox.Location = new System.Drawing.Point(3, 3);
+            this.locatorBox.Name = "locatorBox";
+            this.locatorBox.Size = new System.Drawing.Size(420, 322);
+            this.locatorBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.locatorBox.TabIndex = 0;
+            this.locatorBox.TabStop = false;
             // 
             // luresButton
             // 
@@ -744,30 +775,15 @@
             this.columnHeader13.Text = "Slots";
             this.columnHeader13.Width = 120;
             // 
-            // locatorBox
-            // 
-            this.locatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.locatorBox.BackColor = System.Drawing.Color.Black;
-            this.locatorBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.locatorBox.Location = new System.Drawing.Point(3, 3);
-            this.locatorBox.Name = "locatorBox";
-            this.locatorBox.Size = new System.Drawing.Size(420, 322);
-            this.locatorBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.locatorBox.TabIndex = 0;
-            this.locatorBox.TabStop = false;
-            this.locatorBox.Click += new System.EventHandler(this.locatorBox_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 384);
+            this.Controls.Add(this.positionPanel);
             this.Controls.Add(this.luresPanel);
             this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.itemPanel);
-            this.Controls.Add(this.positionPanel);
             this.Controls.Add(this.savesButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.luresButton);
@@ -787,11 +803,8 @@
             this.itemPanel.PerformLayout();
             this.positionPanel.ResumeLayout(false);
             this.positionPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.yTracker)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zTracker)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.xTracker)).EndInit();
-            this.luresPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).EndInit();
+            this.luresPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -847,9 +860,6 @@
         private System.Windows.Forms.Label xCoordLabel;
         private System.Windows.Forms.Button consTypeButton;
         private System.Windows.Forms.Button wikiButton;
-        private System.Windows.Forms.TrackBar xTracker;
-        private System.Windows.Forms.TrackBar zTracker;
-        private System.Windows.Forms.TrackBar yTracker;
         private System.Windows.Forms.Button luresButton;
         private System.Windows.Forms.Panel luresPanel;
         private System.Windows.Forms.Button editHexButton;
@@ -865,6 +875,11 @@
         private System.Windows.Forms.Button setActiveButton;
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.Button editSlotsButton;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox zValue;
+        private System.Windows.Forms.TextBox yValue;
+        private System.Windows.Forms.TextBox xValue;
+        private System.Windows.Forms.Label label1;
     }
 }
 
