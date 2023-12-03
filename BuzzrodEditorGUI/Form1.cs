@@ -474,9 +474,9 @@ namespace BuzzrodEditorGUI
         {
             BuzzrodProfile brp = profiles[selected];
             brp.InitializePosition();
-            xCoordLabel.Text = "X: " + brp.positionX.ToString();
-            yCoordLabel.Text = "Y: " + brp.positionY.ToString();
-            zCoordLabel.Text = "Z: " + brp.positionZ.ToString();
+            //xCoordLabel.Text = "X: " + brp.positionX.ToString();
+            //yCoordLabel.Text = "Y: " + brp.positionY.ToString();
+            //zCoordLabel.Text = "Z: " + brp.positionZ.ToString();
             lock_ = true;
             try
             {
@@ -713,6 +713,12 @@ namespace BuzzrodEditorGUI
             {
                 ReloadPosition();
             }
+        }
+
+        private void tutorialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Help h = new Help();
+            h.Show();
         }
     }
     public class BuzzrodProfile

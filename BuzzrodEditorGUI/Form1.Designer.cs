@@ -82,7 +82,6 @@
             this.zCoordLabel = new System.Windows.Forms.Label();
             this.yCoordLabel = new System.Windows.Forms.Label();
             this.xCoordLabel = new System.Windows.Forms.Label();
-            this.locatorBox = new System.Windows.Forms.PictureBox();
             this.luresButton = new System.Windows.Forms.Button();
             this.luresPanel = new System.Windows.Forms.Panel();
             this.editSlotsButton = new System.Windows.Forms.Button();
@@ -98,12 +97,13 @@
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.locatorBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.savesPanel.SuspendLayout();
             this.itemPanel.SuspendLayout();
             this.positionPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).BeginInit();
             this.luresPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).BeginInit();
             this.SuspendLayout();
             // 
             // listView1
@@ -270,14 +270,15 @@
             // 
             this.tutorialToolStripMenuItem.Name = "tutorialToolStripMenuItem";
             this.tutorialToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.tutorialToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.tutorialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.tutorialToolStripMenuItem.Text = "&Tutorial";
+            this.tutorialToolStripMenuItem.Click += new System.EventHandler(this.tutorialToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -588,9 +589,9 @@
             this.zCoordLabel.AutoSize = true;
             this.zCoordLabel.Location = new System.Drawing.Point(429, 112);
             this.zCoordLabel.Name = "zCoordLabel";
-            this.zCoordLabel.Size = new System.Drawing.Size(76, 13);
+            this.zCoordLabel.Size = new System.Drawing.Size(57, 13);
             this.zCoordLabel.TabIndex = 1;
-            this.zCoordLabel.Text = "Position Z: null";
+            this.zCoordLabel.Text = "Position Z:";
             // 
             // yCoordLabel
             // 
@@ -598,9 +599,9 @@
             this.yCoordLabel.AutoSize = true;
             this.yCoordLabel.Location = new System.Drawing.Point(429, 60);
             this.yCoordLabel.Name = "yCoordLabel";
-            this.yCoordLabel.Size = new System.Drawing.Size(79, 13);
+            this.yCoordLabel.Size = new System.Drawing.Size(60, 13);
             this.yCoordLabel.TabIndex = 1;
-            this.yCoordLabel.Text = "Position: Y: null";
+            this.yCoordLabel.Text = "Position: Y:";
             // 
             // xCoordLabel
             // 
@@ -608,23 +609,9 @@
             this.xCoordLabel.AutoSize = true;
             this.xCoordLabel.Location = new System.Drawing.Point(429, 12);
             this.xCoordLabel.Name = "xCoordLabel";
-            this.xCoordLabel.Size = new System.Drawing.Size(76, 13);
+            this.xCoordLabel.Size = new System.Drawing.Size(57, 13);
             this.xCoordLabel.TabIndex = 1;
-            this.xCoordLabel.Text = "Position X: null";
-            // 
-            // locatorBox
-            // 
-            this.locatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.locatorBox.BackColor = System.Drawing.Color.Black;
-            this.locatorBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.locatorBox.Location = new System.Drawing.Point(3, 3);
-            this.locatorBox.Name = "locatorBox";
-            this.locatorBox.Size = new System.Drawing.Size(420, 322);
-            this.locatorBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.locatorBox.TabIndex = 0;
-            this.locatorBox.TabStop = false;
+            this.xCoordLabel.Text = "Position X:";
             // 
             // luresButton
             // 
@@ -775,14 +762,28 @@
             this.columnHeader13.Text = "Slots";
             this.columnHeader13.Width = 120;
             // 
+            // locatorBox
+            // 
+            this.locatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.locatorBox.BackColor = System.Drawing.Color.Black;
+            this.locatorBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.locatorBox.Location = new System.Drawing.Point(3, 3);
+            this.locatorBox.Name = "locatorBox";
+            this.locatorBox.Size = new System.Drawing.Size(420, 322);
+            this.locatorBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.locatorBox.TabIndex = 0;
+            this.locatorBox.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 384);
+            this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.positionPanel);
             this.Controls.Add(this.luresPanel);
-            this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.itemPanel);
             this.Controls.Add(this.savesButton);
             this.Controls.Add(this.button3);
@@ -803,8 +804,8 @@
             this.itemPanel.PerformLayout();
             this.positionPanel.ResumeLayout(false);
             this.positionPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).EndInit();
             this.luresPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
