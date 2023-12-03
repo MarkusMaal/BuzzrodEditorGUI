@@ -82,6 +82,7 @@
             this.zCoordLabel = new System.Windows.Forms.Label();
             this.yCoordLabel = new System.Windows.Forms.Label();
             this.xCoordLabel = new System.Windows.Forms.Label();
+            this.locatorBox = new System.Windows.Forms.PictureBox();
             this.luresButton = new System.Windows.Forms.Button();
             this.luresPanel = new System.Windows.Forms.Panel();
             this.editSlotsButton = new System.Windows.Forms.Button();
@@ -97,13 +98,12 @@
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.locatorBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.savesPanel.SuspendLayout();
             this.itemPanel.SuspendLayout();
             this.positionPanel.SuspendLayout();
-            this.luresPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).BeginInit();
+            this.luresPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -613,6 +613,20 @@
             this.xCoordLabel.TabIndex = 1;
             this.xCoordLabel.Text = "Position X:";
             // 
+            // locatorBox
+            // 
+            this.locatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.locatorBox.BackColor = System.Drawing.Color.Black;
+            this.locatorBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.locatorBox.Location = new System.Drawing.Point(3, 3);
+            this.locatorBox.Name = "locatorBox";
+            this.locatorBox.Size = new System.Drawing.Size(420, 322);
+            this.locatorBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.locatorBox.TabIndex = 0;
+            this.locatorBox.TabStop = false;
+            // 
             // luresButton
             // 
             this.luresButton.Enabled = false;
@@ -762,29 +776,15 @@
             this.columnHeader13.Text = "Slots";
             this.columnHeader13.Width = 120;
             // 
-            // locatorBox
-            // 
-            this.locatorBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.locatorBox.BackColor = System.Drawing.Color.Black;
-            this.locatorBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.locatorBox.Location = new System.Drawing.Point(3, 3);
-            this.locatorBox.Name = "locatorBox";
-            this.locatorBox.Size = new System.Drawing.Size(420, 322);
-            this.locatorBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.locatorBox.TabIndex = 0;
-            this.locatorBox.TabStop = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 384);
-            this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.positionPanel);
             this.Controls.Add(this.luresPanel);
             this.Controls.Add(this.itemPanel);
+            this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.savesButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.luresButton);
@@ -804,8 +804,8 @@
             this.itemPanel.PerformLayout();
             this.positionPanel.ResumeLayout(false);
             this.positionPanel.PerformLayout();
-            this.luresPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.locatorBox)).EndInit();
+            this.luresPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
