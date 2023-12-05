@@ -47,43 +47,7 @@ namespace BuzzrodEditorGUI
         {
             if (openSaveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                List<byte> data = new List<byte>();
-                int size = 0;
-                saveFileData = File.ReadAllBytes(openSaveFileDialog.FileName);
-                size = saveFileData.Length;
-                data.Clear();
-                if (size == 10408)
-                {
-                    MessageBox.Show("File loaded successfully!", "Buzzrod Save Editor open function", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } else if (size > 10408)
-                {
-                    MessageBox.Show("Warning! Bigger file size than expected! Save file will be shown as corrupt in-game! Bytes 10409-" + size.ToString() + " will be ignored! Use the \"Save\" function to save the file with the correct size!", "Buzzrod Save Editor open function", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                } else
-                {
-                    MessageBox.Show("Warning! Smaller file size than expected! Save file will be shown as corrupt in-game! Please use \"Extract\" function to copy good profiles to another save file.", "Buzzrod Save Editor open function", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                savesButton.PerformClick();
-                List<BuzzrodProfile> brps = new List<BuzzrodProfile>();
-                for (int i = 0; i < 5; i++)
-                {
-                    int offset = i * 0x820;
-                    byte[] bytes = new byte[0x820];
-                    try
-                    {
-                        Array.Copy(saveFileData, offset, bytes, 0, 0x820);
-                        brps.Add(new BuzzrodProfile(offset, bytes));
-                    } catch
-                    {
-
-                    }
-                }
-                profiles = brps.ToArray();
-                brps.Clear();
-                ReloadProfileList();
-                save_file = openSaveFileDialog.FileName;
-                saveToolStripMenuItem.Enabled = true;
-                saveAsToolStripMenuItem.Enabled = true;
-                fixFileStructureToolStripMenuItem.Enabled = true;
+                LoadFile(openSaveFileDialog.FileName);
             }
             else
             {
@@ -91,9 +55,54 @@ namespace BuzzrodEditorGUI
             }
         }
 
+        private void LoadFile(string filename)
+        {
+            List<byte> data = new List<byte>();
+            int size = 0;
+            saveFileData = File.ReadAllBytes(filename);
+            size = saveFileData.Length;
+            data.Clear();
+            if (size == 10408)
+            {
+                MessageBox.Show("File loaded successfully!", "Buzzrod Save Editor open function", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (size > 10408)
+            {
+                MessageBox.Show("Warning! Bigger file size than expected! Save file will be shown as corrupt in-game! Bytes 10409-" + size.ToString() + " will be ignored! Use the \"Save\" function to save the file with the correct size!", "Buzzrod Save Editor open function", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show("Warning! Smaller file size than expected! Save file will be shown as corrupt in-game! Please use \"Extract\" function to copy good profiles to another save file.", "Buzzrod Save Editor open function", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            savesButton.PerformClick();
+            List<BuzzrodProfile> brps = new List<BuzzrodProfile>();
+            for (int i = 0; i < 5; i++)
+            {
+                int offset = i * 0x820;
+                byte[] bytes = new byte[0x820];
+                try
+                {
+                    Array.Copy(saveFileData, offset, bytes, 0, 0x820);
+                    brps.Add(new BuzzrodProfile(offset, bytes));
+                }
+                catch
+                {
+
+                }
+            }
+            profiles = brps.ToArray();
+            brps.Clear();
+            ReloadProfileList();
+            save_file = filename;
+            saveToolStripMenuItem.Enabled = true;
+            saveAsToolStripMenuItem.Enabled = true;
+            fixFileStructureToolStripMenuItem.Enabled = true;
+        }
+
         private void ReloadProfileList()
         {
             listView1.Items.Clear();
+            profileSelLabel.Text = "No profile selected";
             int id = 1;
             foreach (BuzzrodProfile buzzrodProfile in profiles)
             {
@@ -114,6 +123,13 @@ namespace BuzzrodEditorGUI
             areaButton.Enabled = enable;
             button3.Enabled = enable;
             luresButton.Enabled = enable;
+            if (enable)
+            {
+                profileSelLabel.Text = String.Format("Selected profile: {0}", listView1.SelectedItems[0].Text.Replace("*", ""));
+            } else
+            {
+                profileSelLabel.Text = "No profile selected";
+            }
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -241,13 +257,17 @@ namespace BuzzrodEditorGUI
         private void savesButton_Click(object sender, EventArgs e)
         {
             savesButton.Enabled = false;
-            itemsButton.Enabled = true;
-            button3.Enabled = true;
+            itemsButton.Enabled = false;
+            button3.Enabled = false;
             savesPanel.Visible = true;
             itemPanel.Visible = false;
             positionPanel.Visible = false;
-            luresButton.Enabled = true;
+            luresButton.Enabled = false;
             luresPanel.Visible = false;
+            areaButton.Enabled = false;
+            extractButton.Enabled = false;
+            deleteButton.Enabled = false;
+            replaceButton.Enabled = false;
             ReloadProfileList();
         }
 
@@ -719,6 +739,35 @@ namespace BuzzrodEditorGUI
         {
             Help h = new Help();
             h.Show();
+        }
+
+        private void listView1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] fileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            LoadFile(fileList[0]);
+        }
+
+        private void listView1_MouseDown(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void listView1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            } else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            if (Program.fileName != "")
+            {
+                LoadFile(Program.fileName);
+            }
         }
     }
     public class BuzzrodProfile

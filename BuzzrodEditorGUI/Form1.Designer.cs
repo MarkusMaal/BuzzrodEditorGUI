@@ -98,6 +98,7 @@
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.profileSelLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.savesPanel.SuspendLayout();
             this.itemPanel.SuspendLayout();
@@ -108,6 +109,7 @@
             // 
             // listView1
             // 
+            this.listView1.AllowDrop = true;
             this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -132,6 +134,9 @@
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listView1_ItemSelectionChanged);
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.listView1_DragDrop);
+            this.listView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.listView1_DragEnter);
+            this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDown);
             // 
             // id
             // 
@@ -270,7 +275,7 @@
             // 
             this.tutorialToolStripMenuItem.Name = "tutorialToolStripMenuItem";
             this.tutorialToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.tutorialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tutorialToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.tutorialToolStripMenuItem.Text = "&Tutorial";
             this.tutorialToolStripMenuItem.Click += new System.EventHandler(this.tutorialToolStripMenuItem_Click);
             // 
@@ -278,7 +283,7 @@
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -295,6 +300,7 @@
             // 
             // savesPanel
             // 
+            this.savesPanel.AllowDrop = true;
             this.savesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -536,8 +542,7 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.Location = new System.Drawing.Point(432, 180);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(190, 139);
@@ -547,8 +552,7 @@
             // 
             // zValue
             // 
-            this.zValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.zValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.zValue.Location = new System.Drawing.Point(430, 128);
             this.zValue.Name = "zValue";
             this.zValue.Size = new System.Drawing.Size(184, 20);
@@ -556,8 +560,7 @@
             // 
             // yValue
             // 
-            this.yValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.yValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.yValue.Location = new System.Drawing.Point(428, 76);
             this.yValue.Name = "yValue";
             this.yValue.Size = new System.Drawing.Size(184, 20);
@@ -565,8 +568,7 @@
             // 
             // xValue
             // 
-            this.xValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.xValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.xValue.Location = new System.Drawing.Point(429, 28);
             this.xValue.Name = "xValue";
             this.xValue.Size = new System.Drawing.Size(184, 20);
@@ -776,15 +778,28 @@
             this.columnHeader13.Text = "Slots";
             this.columnHeader13.Width = 120;
             // 
+            // profileSelLabel
+            // 
+            this.profileSelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.profileSelLabel.Location = new System.Drawing.Point(360, 32);
+            this.profileSelLabel.Name = "profileSelLabel";
+            this.profileSelLabel.Size = new System.Drawing.Size(262, 18);
+            this.profileSelLabel.TabIndex = 6;
+            this.profileSelLabel.Text = "No profile selected";
+            this.profileSelLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 384);
+            this.Controls.Add(this.savesPanel);
+            this.Controls.Add(this.profileSelLabel);
             this.Controls.Add(this.positionPanel);
             this.Controls.Add(this.luresPanel);
             this.Controls.Add(this.itemPanel);
-            this.Controls.Add(this.savesPanel);
             this.Controls.Add(this.savesButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.luresButton);
@@ -796,6 +811,7 @@
             this.Name = "Form1";
             this.Text = "Buzzrod Save Editor (Alpha)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.savesPanel.ResumeLayout(false);
@@ -881,6 +897,7 @@
         private System.Windows.Forms.TextBox yValue;
         private System.Windows.Forms.TextBox xValue;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label profileSelLabel;
     }
 }
 
